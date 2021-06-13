@@ -1,41 +1,35 @@
+//T.C:O(n^2) 
+
 #include <bits/stdc++.h>
 using namespace std;
 
-void insertionSort(int arr[], int n)
+void insertionSort(vector<int>& vec)
 {
-	int temp, j;
-	for (int i = 1; i < n; i++)
-	{
-		temp = arr[i];
-		j = i - 1;
-
-		while (j >= 0 && arr[j] > temp)
-		{
-			arr[j + 1] = arr[j];
-			j = j - 1;
+	int temp;
+	for (int i = 1; i < vec.size(); i++) {
+		temp = vec[i];
+		int j = i;
+		while (j >= 1 && vec[j - 1] > temp) {
+			vec[j] = vec[j - 1];
+			j--;
 		}
-		arr[j + 1] = temp;
+		vec[j] = temp;
 	}
-}
-
-void printArray(int arr[], int n)
-{
-	for (int i = 0; i < n; i++)
-		cout << arr[i] << " ";
-	cout << endl;
 }
 
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(), cout.tie();
 
-	int arr[] = { 12, 11, 13, 5, 6 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	cout << "Given array:\n";
-	printArray(arr, n);
-	insertionSort(arr, n);
-	cout << "Sorted array:\n";
-	printArray(arr, n);
+	vector<int>vec = { 64, 25, 12, 22, 11 };
+
+	cout << "Given array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
+	insertionSort(vec);
+	cout << "\nSorted array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
 
 	return 0;
 }

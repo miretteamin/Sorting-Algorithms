@@ -6,81 +6,55 @@ using namespace std;
 
 typedef long long ll;
 
-void merge(int a[], int l, int m, int r)
+void merge(vector<int>& vec, int l, int mid, int r)
 {
-	int n1 = m - l + 1, n2 = r - m;
-	int* L = new int[n1];
-	int* R = new int[n2];
+	vector<int>subVec1(mid - l + 1);
+	vector<int>subVec2(r - mid);
 
-	for (int i = 0; i < n1; i++)
-		L[i] = a[l + i];
-	for (int i = 0; i < n2; i++)
-		R[i] = a[m + 1 + i];
+	for (int i = 0; i < subVec1.size(); i++)
+		subVec1[i] = vec[l + i];
+	for (int i = 0; i < subVec2.size(); i++)
+		subVec2[i] = vec[mid + i + 1];
 
-	int i = 0, j = 0, k = l;
+	int i(0), j(0), k(l);
 
-	while (i < n1 && j < n2)
-	{
-		if (L[i] <= R[j])
-		{
-			a[k] = L[i];
-			i++;
-		}
+	while (i < subVec1.size() && j < subVec2.size()) {
+		if (subVec1[i] < subVec2[j])
+			vec[k++] = subVec1[i++];
 		else
-		{
-			a[k] = R[j];
-			j++;
-		}
-		k++;
-	}
-	// Copy the remaining elements of
-	// L[], if there are any
-	while (i < n1) {
-		a[k] = L[i];
-		i++;
-		k++;
+			vec[k++] = subVec2[j++];
 	}
 
-	// Copy the remaining elements of
-	// R[], if there are any
-	while (j < n2) {
-		a[k] = R[j];
-		j++;
-		k++;
-	}
+	while (i < subVec1.size())
+		vec[k++] = subVec1[i++];
+
+	while (j < subVec2.size())
+		vec[k++] = subVec2[j++];
 }
 
-void mergeSort(int a[], int l, int r)
+void mergeSort(vector<int>& vec, int l, int r)
 {
-	if (l < r)
-	{
-		int m = l + (r - l) / 2;
-		mergeSort(a, l, m);
-		mergeSort(a, m + 1, r);
-		merge(a, l, m, r);
+	if (l < r) {
+		int mid = l + (r - l) / 2;
+		mergeSort(vec, l, mid);
+		mergeSort(vec, mid + 1, r);
+		merge(vec, l, mid, r);
 	}
-}
-
-void printArray(int arr[], int size)
-{
-	for (int i = 0; i < size; i++)
-		cout << arr[i] << " ";
 }
 
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(), cout.tie();
 
-	int arr[] = { 12, 11, 13, 5, 6, 7 };
-    int arr_size = sizeof(arr) / sizeof(arr[0]);
- 
-    cout << "Given array is \n";
-    printArray(arr, arr_size);
- 
-    mergeSort(arr, 0, arr_size - 1);
- 
-    cout << "\nSorted array is \n";
-    printArray(arr, arr_size);
+	vector<int>vec = { 64, 25, 12, 22, 11 };
+
+	cout << "Given array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
+	mergeSort(vec, 0, vec.size() - 1);
+	cout << "\nSorted array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
 
 	return 0;
 }

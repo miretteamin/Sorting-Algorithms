@@ -10,41 +10,34 @@ void swap(int* a, int* b)
 	*b = temp;
 }
 
-void selectionSort(int arr[], int n)
+void selectionSort(vector<int>& vec)
 {
 	int minIdx;
 
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < vec.size() - 1; i++)
 	{
 		minIdx = i;
-		for (int j = i + 1; j < n; j++)
-			if (arr[j] < arr[minIdx])
+		for (int j = i + 1; j < vec.size(); j++)
+			if (vec[j] < vec[minIdx])
 				minIdx = j;
 
-		swap(&arr[minIdx], &arr[i]);
+		swap(&vec[minIdx], &vec[i]);
 	}
-}
-
-/* Function to print an array */
-void printArray(int arr[], int size)
-{
-	int i;
-	for (i = 0; i < size; i++)
-		cout << arr[i] << " ";
-	cout << endl;
 }
 
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(), cout.tie();
 
-	int arr[] = { 64, 25, 12, 22, 11 };
-	int n = sizeof(arr) / sizeof(arr[0]);
+	vector<int>vec = { 64, 25, 12, 22, 11 };
+
 	cout << "Given array: \n";
-	printArray(arr, n);
-	selectionSort(arr, n);
-	cout << "Sorted array: \n";
-	printArray(arr, n);
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
+	selectionSort(vec);
+	cout << "\nSorted array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
 
 	return 0;
 }

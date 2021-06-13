@@ -12,53 +12,42 @@ void swap(int* a, int* b)
 	*b = temp;
 }
 
-int partition(int arr[], int low, int high)
+int partition(vector<int>& vec, int low, int high)
 {
-	int pivot = arr[high], i = -1;
-	for (int j = low; j <= high - 1; j++)
-	{
-		if (arr[j] < pivot)
-		{
+	int pivot = vec[low];
+	int i = low;
+	for (int j = low + 1; j <= high; j++) {
+		if (vec[j] < pivot) {
 			i++;
-			swap(arr[i], arr[j]);
+			swap(&vec[i], &vec[j]);
 		}
 	}
-	swap(&arr[i + 1], &arr[high]); //swapping pivot
-	return (i + 1);
+	swap(&vec[i],&vec[low]);
+	return i;
 }
 
-void quickSort(int arr[], int low, int high)
+void quickSort(vector<int>& vec, int low, int high)
 {
-	if (low < high)
-	{
-		int pi = partition(arr, low, high);
-		quickSort(arr, low, pi - 1);
-		quickSort(arr, pi + 1, high);
+	if (low < high) {
+		int middlePivotIdx = partition(vec, low, high);
+		quickSort(vec, low, middlePivotIdx - 1);
+		quickSort(vec, middlePivotIdx + 1, high);
 	}
-}
-
-void printArray(int arr[], int size)
-{
-	int i;
-	for (i = 0; i < size; i++)
-		cout << arr[i] << " ";
-	cout << endl;
 }
 
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(), cout.tie();
 
-	int arr[] = { 10, 7, 8, 9, 1, 5 };
-	int n = sizeof(arr) / sizeof(arr[0]);
+	vector<int>vec = { 64, 25, 12, 22, 11 };
 
 	cout << "Given array: \n";
-	printArray(arr, n);
-
-	quickSort(arr, 0, n - 1);
-
-	cout << "Sorted array: \n";
-	printArray(arr, n);
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
+	quickSort(vec, 0, vec.size() - 1);
+	cout << "\nSorted array: \n";
+	for (int i = 0; i < vec.size(); i++)
+		cout << vec[i] << " ";
 
 	return 0;
 }
